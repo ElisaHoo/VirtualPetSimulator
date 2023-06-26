@@ -9,7 +9,7 @@ int main() {
     std::cout << "(2) Play " << pet.name << " (increases happiness and decreases energy)\n";
     std::cout << "(3) Put " << pet.name << " sleep (increases energy)\n";
     std::cout << "(4) View statistics\n";
-    std::cout << "(5) exit\n";
+    std::cout << "(5) Save and exit\n";
     std::string choice_str{};
     std::getline(std::cin, choice_str);
 
@@ -44,7 +44,8 @@ int main() {
         
         case 5:
             {
-                std::cout << "\nGoodbye!\n";
+                save_state(pet);
+                std::cout << "Goodbye!\n";
                 return 0;
             }
         
