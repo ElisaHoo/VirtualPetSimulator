@@ -8,7 +8,8 @@ int main() {
     std::cout << "(1) Feed " << pet.name << " (increases happiness and fullness)\n";
     std::cout << "(2) Play " << pet.name << " (increases happiness and decreases energy)\n";
     std::cout << "(3) Put " << pet.name << " sleep (increases energy)\n";
-    std::cout << "(4) exit\n";
+    std::cout << "(4) View statistics\n";
+    std::cout << "(5) exit\n";
     std::string choice_str{};
     std::getline(std::cin, choice_str);
 
@@ -34,8 +35,14 @@ int main() {
                 std::cout << "Now your pet's energy is " << pet.energy << ".\n";
             }
             break;
-        
+
         case 4:
+            {
+                view_statistics(pet);
+            }
+            break;
+        
+        case 5:
             {
                 std::cout << "\nGoodbye!\n";
                 return 0;
