@@ -16,7 +16,7 @@ void create_pet(struct Pet& pet) {
     std::cout << "\nA new pet created! Name: " << pet.name 
               << " and type: " << pet.type << "\n";
     std::cout << "Keep the happiness, fullness and energy above zero to " 
-                 "make your pet feel satisfied!\n\n";
+                 "make your pet feel satisfied!\n";
 }
 
 void feed_pet(struct Pet& pet) {
@@ -35,4 +35,9 @@ void play_pet(struct Pet& pet) {
     std::cout << pet.name << ": 'Yippee!'\n";
     std::cout << "Now your pet's happiness is " << pet.happiness 
               << " and energy is " << pet.energy << ".\n";
+}
+
+int put_sleep(int energy) {
+    energy += 1;
+    return energy;
 }
