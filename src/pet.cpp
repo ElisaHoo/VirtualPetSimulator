@@ -48,3 +48,13 @@ void view_statistics(struct Pet pet) {
               << " and energy is " << pet.energy 
               << ".\n";
 }
+
+void save_state(struct Pet pet) {
+    std::ofstream write_file{"pet.csv"};
+    if (!write_file.is_open()) {
+        throw std::runtime_error("Couldn't open the file!");
+    }
+    write_file << pet.happiness << "\n" << pet.fullness << "\n" << pet.energy;
+    std::cout << "\nPet's current state saved to csv-file!\n";
+    write_file.close();
+}

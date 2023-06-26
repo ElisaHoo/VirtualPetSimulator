@@ -2,6 +2,8 @@
 #define PET_H
 
 #include <iostream>
+#include <fstream>
+#include <limits>
 
 struct Pet {
     std::string name;
@@ -16,5 +18,6 @@ void feed_pet(struct Pet& pet);
 void play_pet(struct Pet& pet);
 int put_sleep(int energy);
 void view_statistics(struct Pet pet);
+void save_state(struct Pet pet);
 
 #endif
