@@ -1,8 +1,6 @@
 #include "../includes/pet.h"
 
 void create_pet(struct Pet& pet) {
-    std::cout << "*** Virtual Pet Simulator ***\n\n";
-    
     std::cout << "Please enter your pet's type: ";
     std::string pet_type;
     std::getline(std::cin, pet_type);
@@ -54,7 +52,25 @@ void save_state(struct Pet pet) {
     if (!write_file.is_open()) {
         throw std::runtime_error("Couldn't open the file!");
     }
-    write_file << pet.happiness << "\n" << pet.fullness << "\n" << pet.energy;
-    std::cout << "\nPet's current state saved to csv-file!\n";
+    write_file << pet.name << "\n" 
+               << pet.type << "\n"
+               << pet.happiness << "\n" 
+               << pet.fullness << "\n" 
+               << pet.energy;
+    std::cout << "\nPet's current state is saved to a csv-file!\n";
     write_file.close();
+}
+
+std::vector<std::string> load_previous_pet() {
+    std::vector<std::string> file_data{};
+    std::ifstream read_file{"pet.csv"};
+    if (!read_file.is_open()) {
+        throw std::runtime_error("Couldn't opet the file!");
+    }
+    std::string line{};
+    while (read_file >> line) {
+        file_data.push_back(line);
+    }
+    read_file.close();
+    return file_data;
 }

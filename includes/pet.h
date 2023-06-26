@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <limits>
+#include <vector>
 
 struct Pet {
     std::string name;
@@ -19,5 +19,6 @@ void play_pet(struct Pet& pet);
 int put_sleep(int energy);
 void view_statistics(struct Pet pet);
 void save_state(struct Pet pet);
+std::vector<std::string> load_previous_pet();
 
 #endif
