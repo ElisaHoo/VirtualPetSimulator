@@ -15,9 +15,7 @@ void create_pet(struct Pet& pet) {
 
     std::cout << "\nA new pet created! Name: " << pet.name 
               << " and type: " << pet.type << "\n";
-    std::cout << "Your pet's happiness is now " << pet.happiness 
-              << " and fullness: " << pet.fullness << "\n";
-    std::cout << "Keep the happiness and fullness above zero to " 
+    std::cout << "Keep the happiness, fullness and energy above zero to " 
                  "make your pet feel satisfied!\n\n";
 }
 
@@ -28,4 +26,13 @@ void feed_pet(struct Pet& pet) {
     std::cout << pet.name << ": 'Yum, yum!'\n";
     std::cout << "Now your pet's happiness is " << pet.happiness 
               << " and fullness is " << pet.fullness << ".\n";
+}
+
+void play_pet(struct Pet& pet) {
+    pet.happiness += 1;
+    pet.energy -= 1;
+    std::cout << "\n";
+    std::cout << pet.name << ": 'Yippee!'\n";
+    std::cout << "Now your pet's happiness is " << pet.happiness 
+              << " and energy is " << pet.energy << ".\n";
 }
