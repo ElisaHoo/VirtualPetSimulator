@@ -15,5 +15,6 @@ void create_pet(struct Pet& pet);
 void feed_pet(struct Pet& pet);
 void play_pet(struct Pet& pet);
 int put_sleep(int energy);
+void view_statistics(struct Pet pet);
 
 #endif

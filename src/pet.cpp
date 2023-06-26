@@ -41,3 +41,10 @@ int put_sleep(int energy) {
     energy += 1;
     return energy;
 }
+
+void view_statistics(struct Pet pet) {
+    std::cout << "\nYour pet's happiness is " << pet.happiness 
+              << ", fullness is " << pet.fullness 
+              << " and energy is " << pet.energy 
+              << ".\n";
+}
