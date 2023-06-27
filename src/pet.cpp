@@ -1,57 +1,84 @@
 #include "../includes/pet.h"
 
-void create_pet(struct Pet& pet) {
-    std::cout << "Please enter your pet's type: ";
-    std::string pet_type;
-    std::getline(std::cin, pet_type);
-    
+void clear_failed_cin() {
+    if(!std::cin) { // User didn't input number -> cin fails
+        std::cin.clear();  // clear cin's failbit
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
+    }
+}
+
+std::string get_pet_name() {
     std::cout << "Please enter your pet's name: ";
     std::string pet_name;
+    std::cin >> std::ws;
     std::getline(std::cin, pet_name);
-
-    pet = {pet_name, pet_type};
-
-    std::cout << "\nA new pet created! Name: " << pet.name 
-              << " and type: " << pet.type << "\n";
-    std::cout << "Keep the happiness, fullness and energy above zero to " 
-                 "make your pet feel satisfied!\n";
+    return pet_name;
 }
 
-void feed_pet(struct Pet& pet) {
-    pet.happiness += 1;
-    pet.fullness += 1;
-    std::cout << "\n";
-    std::cout << pet.name << ": 'Yum, yum!'\n";
-    std::cout << "Now your pet's happiness is " << pet.happiness 
-              << " and fullness is " << pet.fullness << ".\n";
+std::string get_pet_type() {
+    std::cout << "Please enter your pet's type: ";
+    std::string pet_type;
+    std::cin >> std::ws; // to get rid of the possible white spaces before input
+    std::getline(std::cin, pet_type);
+    return pet_type;
 }
 
-void play_pet(struct Pet& pet) {
-    pet.happiness += 1;
-    pet.energy -= 1;
-    std::cout << "\n";
-    std::cout << pet.name << ": 'Yippee!'\n";
-    std::cout << "Now your pet's happiness is " << pet.happiness 
-              << " and energy is " << pet.energy << ".\n";
+void create_pet(Pet& pet) {
+    pet.name = get_pet_name();
+    pet.type = get_pet_type();
 }
 
-int put_sleep(int energy) {
+int increase_happiness(int happiness) {
+    happiness += 1;
+    return happiness;
+}
+
+int increase_fullness(int fullness) {
+    fullness += 1;
+    return fullness;
+}
+
+int decrease_energy(int energy) {
+    energy -= 1;
+    return energy;
+}
+
+int increase_energy (int energy) {
     energy += 1;
     return energy;
 }
 
-void view_statistics(struct Pet pet) {
+void feed_pet(Pet& pet) {
+    // Use "increasing -functions" to update values, give base value as argument
+    pet.happiness = increase_happiness(pet.happiness);
+    pet.fullness = increase_fullness(pet.fullness);
+}
+
+void play_pet(Pet& pet) {
+    pet.happiness = increase_happiness(pet.happiness);
+    pet.energy = decrease_energy(pet.energy);
+}
+
+void put_sleep(Pet& pet) {
+    pet.energy = increase_energy(pet.energy);
+}
+
+void view_statistics(Pet pet) {
     std::cout << "\nYour pet's happiness is " << pet.happiness 
               << ", fullness is " << pet.fullness 
               << " and energy is " << pet.energy 
               << ".\n";
+    if (pet.energy <= 0) {
+        std::cout << "\nWARNING! Your pet is exhausted, you should put it to sleep.\n";
+    }
 }
 
-void save_state(struct Pet pet) {
+void save_state(Pet pet) {
     std::ofstream write_file{"pet.csv"};
     if (!write_file.is_open()) {
         throw std::runtime_error("Couldn't open the file!");
     }
+    // Writing struct values to file, each to their own line
     write_file << pet.name << "\n" 
                << pet.type << "\n"
                << pet.happiness << "\n" 
@@ -62,15 +89,17 @@ void save_state(struct Pet pet) {
 }
 
 std::vector<std::string> load_previous_pet() {
-    std::vector<std::string> file_data{};
+    std::vector<std::string> file_contents{};
     std::ifstream read_file{"pet.csv"};
     if (!read_file.is_open()) {
         throw std::runtime_error("Couldn't opet the file!");
     }
     std::string line{};
+    // Reading and pushing the data to a vector from a file (as string)
     while (read_file >> line) {
-        file_data.push_back(line);
+        file_contents.push_back(line);
     }
     read_file.close();
-    return file_data;
+    // Returning the file data to the main along with the vector
+    return file_contents;
 }
